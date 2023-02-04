@@ -14,9 +14,9 @@ const Modal = ({ onClose, children }) => {
     }
   };
   useEffect(() => {
-    window.addEventListener('keydown', handCloseModal);
+    document.addEventListener('keydown', handCloseModal);
     return () => {
-      window.removeEventListener('keydown', handCloseModal);
+      document.removeEventListener('keydown', handCloseModal);
     };
   });
 
