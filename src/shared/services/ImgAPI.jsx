@@ -17,7 +17,7 @@ const BASE_URL = 'https://pixabay.com/api';
 const searchPicts = (search, page) => {
   return axios
     .get(
-      `${BASE_URL}/?q=${search}&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
+      `${BASE_URL}/?q=${search}&page=${page}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=15`
     )
     .then(response => response.data);
 };
