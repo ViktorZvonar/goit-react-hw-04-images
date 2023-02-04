@@ -1,5 +1,3 @@
-// import { Component } from 'react';
-
 import { useState } from 'react';
 import { PropTypes } from 'prop-types';
 import { FaSearchengin } from 'react-icons/fa';
@@ -21,7 +19,7 @@ const Searchbar = ({ onSubmit }) => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    onSubmit({ ...state });
+    onSubmit(state);
     // setState({ inputValue: '' });
   };
 

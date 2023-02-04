@@ -6,7 +6,7 @@ import Searchbar from './Searchbar/Searchbar';
 import ImageGallery from './ImageGallery/ImageGallery';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
-// import Modal from 'shared/components/Modal';
+import Modal from 'shared/components/Modal';
 
 import searchPicts from '../shared/services/ImgAPI';
 
@@ -17,46 +17,44 @@ const App = () => {
   const [items, setItems] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  // const [showModal, setShowModal] = useState(false);
-  // const [pickedLargeImageURL, setPickedLargeImageURL] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [pickedLargeImageURL, setPickedLargeImageURL] = useState('');
   const [error, setError] = useState(null);
   const [total, setTotal] = useState(null);
 
   useEffect(() => {
     if (!search) return;
     const fetchPicts = () => {
-      setLoading({ loading: true });
+      setLoading(true);
       searchPicts(search, page)
         .then(({ hits, totalHits }) => {
           const totalPages = Math.round(totalHits / 15);
           if (page === totalPages) {
-            alert('No more pictures or photos for you');
+            alert('You have reached the end of the search');
           }
           setItems(prevItems => [...prevItems, ...hits]);
-          setTotal({ total: totalHits });
+          setTotal(totalHits);
         })
         .catch(error => {
-          setError({ error: error.message });
+          setError(error.message);
         })
-        .finally(() => setLoading({ loading: false }));
+        .finally(() => setLoading(false));
     };
     fetchPicts();
   }, [search, page, setLoading, setItems, setTotal, setError]);
 
-  // const onShowModal = url => {
-  //   setShowModal({ showModal: true });
-  //   setPickedLargeImageURL({ pickedLargeImageURL: url });
-  // };
+  const showLargePict = url => {
+    setShowModal(true);
+    setPickedLargeImageURL(url);
+  };
 
-  // const toggleModal = () => {
-  //   setPickedLargeImageURL({ pickedLargeImageURL: null });
-  //   setShowModal({ showModal: false });
-  // };
+  const toggleModal = () => {
+    setPickedLargeImageURL(null);
+    setShowModal(false);
+  };
 
   const loadMore = () => {
-    setPage(prevState => ({
-      page: prevState.page + 1,
-    }));
+    setPage(prevPage => prevPage + 1);
   };
 
   const searchImg = ({ inputValue }) => {
@@ -69,18 +67,18 @@ const App = () => {
   return (
     <div className={css.App}>
       <Searchbar onSubmit={searchImg} isLoading={loading} />
-      <ImageGallery items={items} />
+      <ImageGallery items={items} onClick={showLargePict} />
       {error && <p>Something goes wrong. Please try again later.</p>}
       {loading && <Loader />}
       {Boolean(items.length) && items.length < total && (
         <Button onLoadMore={loadMore} />
       )}
 
-      {/* {pickedLargeImageURL && (
+      {showModal && (
         <Modal onClose={toggleModal}>
           <img src={pickedLargeImageURL} alt="pict" />
         </Modal>
-      )} */}
+      )}
     </div>
   );
 };
