@@ -41,7 +41,7 @@ const App = () => {
         .finally(() => setLoading(false));
     };
     fetchPicts();
-  }, [search, page, setLoading, setItems, setTotal, setError]);
+  }, [search, page]);
 
   const showLargePict = url => {
     setShowModal(true);

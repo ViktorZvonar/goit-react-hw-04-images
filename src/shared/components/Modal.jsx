@@ -61,7 +61,6 @@ export default Modal;
 // export default Modal;
 
 Modal.propTypes = {
-  onClick: PropTypes.func,
   onClose: PropTypes.func,
   children: PropTypes.node.isRequired,
 };
